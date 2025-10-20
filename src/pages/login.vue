@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 // useUser 会被自动导入
-// import { useUser } from '@/composables/useUser'; 
+import { useUser } from '../composables/useUser';
+
 import { useRouter } from 'vue-router'; // 自动导入
 
 const { isAuthenticated, currentUser, login, logout } = useUser();

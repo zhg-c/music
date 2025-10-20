@@ -1,19 +1,23 @@
 <script setup lang="ts">
-// 这里可以导入全局组件，如 Header/Footer
-import TheHeader from '@/components/TheHeader.vue';
+// 自动导入 TheHeader（因为配置了 unplugin-vue-components）
+import TheHeader from './components/TheHeader.vue';
+// 自动导入 TheFooter
+import TheFooter from './components/TheFooter.vue'; 
 </script>
 
 <template>
   <div class="min-h-screen flex flex-col dark:bg-gray-900">
+    
     <TheHeader />
 
     <main class="flex-grow">
       <RouterView />
     </main>
     
-    </div>
+    <TheFooter />
+  </div>
 </template>
 
 <style>
-/* 全局基础样式可以在这里添加或使用 UnoCSS 的 @unocss preflight */
+/* ... */
 </style>
