@@ -3,6 +3,8 @@ import {computed, ref, onMounted, onUnmounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useUser } from '../../composables/useUser';
 import * as Tone from 'tone'; // ✨ 引入 Tone.js
+// ✨ 关键修改：从外部文件导入 Score 接口和 allScores 数组
+import { type Score, allScores } from '../../data/scores';
 // 自动导入 useUser
 const { isAuthenticated } = useUser();
 
@@ -11,41 +13,11 @@ const route = useRoute();
 const router = useRouter();
 const scoreId = computed(() => Number(route.params.id));
 
-// 2. 模拟数据 (保持不变)
-interface Score {
-  id: number;
-  title: string;
-  artist: string;
-  difficulty: '初级' | '中级' | '高级';
-  duration: string;
-  key: string;
-  description: string;
-  jianpuData: { // ✨ 新增：简谱数据结构
-  pitch: string; // 简谱音高 (如 '5', '6.', '1^' - 高音)
-  duration: number; // 时长 (Tone.js 格式，如 0.5 为八分音符，1 为四分音符)
-  }[];
-}
-
-// 模拟数据 (简谱 '姑苏行' 简单开头，C调 4/4 拍)
-const GUSU_JIANPU_DATA = [
-  // C调，4/4拍。1 = 四分音符 (Quarter Note)
-  { pitch: '5', duration: 1 }, // Sol, 四分音符
-  { pitch: '6', duration: 0.5 }, // La, 八分音符
-  { pitch: '5', duration: 0.5 }, // Sol, 八分音符pnom
-  { pitch: '3', duration: 1 }, // Mi, 四分音符
-  { pitch: '1', duration: 2 }, // Do, 二分音符
-  { pitch: '0', duration: 1 }, // 休止符
-  // ... 更多小节 ...
-];
-
-const allScores: Score[] = [
-  { id: 1, title: '姑苏行', artist: '江先渭', difficulty: '中级', duration: '5:30', key: 'D调', description: '一首著名的竹笛曲...', jianpuData: GUSU_JIANPU_DATA},
-];
-
-// 3. 查找当前曲谱 (保持不变)
+// 2. 查找当前曲谱 (现在使用导入的 allScores)
 const currentScore = computed(() => {
-  return allScores.find(score => score.id === scoreId.value);
+    return allScores.find(score => score.id === scoreId.value);
 });
+
 // ✨✨✨ 播放状态和逻辑 ✨✨✨
 const isPlaying = ref(false);
 const currentNoteIndex = ref(-1); // 跟踪当前演奏到哪个音符
@@ -83,9 +55,9 @@ const setupPlayer = () => {
  
  // 1. 播放声音
  const tonePitch = jianpuToTonePitch(noteObj.pitch, currentScore.value!.key);
-  if (tonePitch) {
-  synth.triggerAttackRelease(tonePitch, noteObj.duration, time);
- }
+  if (tonePitch) {
+   synth.triggerAttackRelease(tonePitch, noteObj.duration, time);
+  }
  
  // 2. 同步高亮（更新索引）
  Tone.Draw.schedule(() => {
