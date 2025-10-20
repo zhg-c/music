@@ -364,3 +364,15 @@ export default defineConfig(({ command }) => {
 真正有影响的是 Vite 的 base 路径。部署到自定义域名的根目录时，必须将 base 设为 /，否则浏览器会去 www.yourdomain.com/life/js/... 查找资源，导致页面空白。
 
 如果切换到阿里云，建议考虑将 Vue Router 的 History 模式从 createWebHashHistory() 切换到 createWebHistory()，以获得更漂亮的 URL（没有 #），但需要额外配置阿里云服务器的 404 页面重定向 到 index.html。
+
+三、Cannot find module 'virtual:generated-pages' or its corresponding type declarations.t
+	当这个提示出现时：在 src 目录下添加文件 vite-env.d.ts,其内容为：
+	// src/shims-vue.d.ts (示例文件名)
+
+// 告诉 TypeScript 虚拟模块 'virtual:generated-pages' 的类型
+declare module 'virtual:generated-pages' {
+  import type { RouteRecordRaw } from 'vue-router'
+  // 声明它默认导出一个 RouteRecordRaw 数组
+  const routes: RouteRecordRaw[]
+  export default routes
+}
