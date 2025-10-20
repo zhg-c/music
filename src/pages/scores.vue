@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 // RouterLink 已被自动导入
 
 // 1. 模拟曲谱数据
@@ -83,10 +83,43 @@ const resetFilters = () => {
     selectedDifficulty.value = 'all';
     selectedKey.value = 'all';
 }
+
+// ✨ 1. 加载状态管理 ✨
+const isLoading = ref(true);
+
+// 2. 模拟数据获取函数
+const fetchData = () => {
+    isLoading.value = true;
+    
+    // 模拟网络延迟 1.5 秒
+    setTimeout(() => {
+        // ⚠️ 实际项目中，这里是 axios.get('/api/scores')
+        // allScores = response.data; 
+        isLoading.value = false;
+    }, 1500);
+};
+
+// 3. 在组件挂载时开始加载
+onMounted(() => {
+    fetchData();
+});
 </script>
 
 <template>
   <div class="p-8 max-w-screen-xl mx-auto min-h-full">
+    <div v-if="isLoading" class="text-center py-20">
+        <div class="i-carbon-spinner-gap animate-spin text-6xl text-green-600 mx-auto mb-4" />
+        <p class="text-xl text-gray-600 dark:text-gray-300">
+            正在加载竹笛曲谱，请稍候...
+        </p>
+    </div>
+
+    <div v-else-if="filteredScores.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      
+      </div>
+    
+    <div v-else class="text-center py-20 bg-gray-100 dark:bg-gray-800 rounded-lg">
+        </div>
     <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white mb-8 border-b-4 border-green-500 pb-2">
       竹笛曲谱库 ({{ filteredScores.length }} / {{ allScores.length }} 首)
     </h1>

@@ -39,7 +39,11 @@ const toggleDark = useToggle(isDark);
     <TheHeader />
 
     <main class="flex-grow">
-      <RouterView />
+      <RouterView v-slot="{ Component }">
+        <Transition name="fade" mode="out-in">
+          <component :is="Component" />
+        </Transition>
+      </RouterView>
     </main>
     
     <TheFooter />
@@ -47,5 +51,23 @@ const toggleDark = useToggle(isDark);
 </template>
 
 <style>
-/* ... */
+/* ---------------------------------- */
+/* 路由过渡效果 (淡入淡出) */
+/* ---------------------------------- */
+
+/* 离开前的状态 */
+.fade-leave-active {
+  transition: opacity 0.3s ease; /* 离开时过渡 0.3s */
+}
+
+/* 进入时的状态 */
+.fade-enter-active {
+  transition: opacity 0.3s ease 0.3s; /* 进入时延迟 0.3s (等离开动画结束) */
+}
+
+/* 离开和进入时的不透明度 */
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
 </style>
