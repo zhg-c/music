@@ -1,69 +1,53 @@
 // vite.config.ts
 
 import { defineConfig } from 'vite'
-
-// 导入所有插件
 import vue from '@vitejs/plugin-vue'
+
+// 插件导入
 import Pages from 'vite-plugin-pages'
 import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import UnoCSS from 'unocss/vite'
-import { presetUno } from 'unocss' // 核心 UnoCSS 预设
-import { presetIcons } from '@unocss/preset-icons' // 图标预设
+// UnoCSS 核心预设和图标预设 (使用兼容性最好的命名导入)
+import { presetUno } from 'unocss' 
+import { presetIcons } from '@unocss/preset-icons' 
 
-// 如果项目部署在子目录（例如 GitHub Pages），可能需要设置 REPO_NAME
-const REPO_NAME = 'life'
+// 🚨 如果部署在 GitHub Pages 子目录，将 'music' 替换为你的仓库名
+const REPO_NAME = 'music'
 
 export default defineConfig(({ command }) => {
   const isProd = command === 'build'
   
   return {
-    // 基础路径配置
+    // 部署配置：如果不是在根域名部署，需要设置 base
     base: isProd ? `/${REPO_NAME}/` : '/',
 
     plugins: [
-      // 1. Vue 3 核心支持
       vue(),
-
-      // 2. 文件系统路由 (vite-plugin-pages)
-      // 自动将 src/pages 下的文件映射为路由
+      
+      // 文件系统路由：自动将 src/pages/ -> 路由
       Pages(),
 
-      // 3. 组件自动导入 (unplugin-vue-components)
-      // 自动导入 src/components 目录下的 Vue 组件
-      Components({
-        dts: true, // 生成 TypeScript 声明文件
-        // 确保它扫描并自动注册你的组件
-        dirs: ['src/components'], 
-      }),
+      // 组件自动导入：自动导入 src/components 中的组件
+      Components({ dts: true }),
 
-      // 4. API 自动导入 (unplugin-auto-import)
-      // 自动导入 Composition API、Vue-Router 和 VueUse 的函数
+      // API 自动导入：自动导入 Vue, Vue-Router 和 VueUse 的函数
       AutoImport({
-        imports: [
-          'vue', 
-          'vue-router', 
-          '@vueuse/core'
-        ],
-        dts: true, // 生成 TypeScript 声明文件
-        vueTemplate: true, // 在 Vue 模板中也启用自动导入
+        imports: ['vue', 'vue-router', '@vueuse/core'],
+        dts: true,
+        vueTemplate: true,
       }),
 
-      // 5. UnoCSS 样式框架
+      // UnoCSS 样式框架
       UnoCSS({
         presets: [
-          // 核心 UnoCSS 预设（包含基础工具类）
-          presetUno(), 
-          // 图标预设（启用 i-carbon-dashboard 等图标类）
-          presetIcons({
-            scale: 1.2, // 可选：设置图标缩放比例
-            warn: true, // 启用警告，帮助调试未找到的图标
-          }),
+          presetUno(), // 基础工具类
+          presetIcons(), // 图标支持
         ],
       }),
     ],
     
-    // 其他配置（例如 TypeScript 别名等）
+    // 配置 @ 路径别名
     resolve: {
       alias: {
         '@': '/src',
