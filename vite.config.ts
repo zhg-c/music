@@ -16,7 +16,7 @@ import { presetUno } from 'unocss'
 import { presetIcons } from '@unocss/preset-icons' // 图标预设
 
 // 如果项目部署在子目录（例如 GitHub Pages），可能需要设置 REPO_NAME
-const REPO_NAME = 'life'
+const REPO_NAME = 'music'
 
 export default defineConfig(({ command }) => {
   const isProd = command === 'build'
