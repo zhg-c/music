@@ -28,8 +28,8 @@ const GUSU_JIANPU_DATA: Score['jianpuData'] = [
     { pitch: '6', duration: 0.5, needsBeam: 'start' },  // 八分音符，连接开始
     { pitch: '5', duration: 0.5, needsBeam: 'end' },    // 八分音符，连接结束
     
-    { pitch: '3', duration: 1 }, // 四分音符
-    { pitch: '0', duration: 1 }, // 休止符
+    { pitch: '3', duration: 1}, // 四分音符
+    { pitch: '0', duration: 1}, // 休止符
 
     // 小节 2: | 1  —  —  — |
     { pitch: '1', duration: 2 }, 

@@ -298,7 +298,7 @@ const getDifficultyClass = (difficulty: Score['difficulty']) => {
                                   v-for="(note, noteIndex) in measure" 
                                   :key="noteIndex"
                                   
-                                  class="px-1 py-1 transition-colors duration-100 ease-linear rounded-md select-none text-center"
+                                  class="relative px-1 py-1 transition-colors duration-100 ease-linear rounded-md select-none text-center"
                                   
                                   :class="{ 
                                       // 高亮修正：使用音符的原始索引进行高亮判断
@@ -315,6 +315,12 @@ const getDifficultyClass = (difficulty: Score['difficulty']) => {
                                   }"
                               >
                                   {{ note.pitch === '0' ? '—' : note.pitch }}
+                                  <template v-if="note.duration === 0.5 && note.pitch !== '0'">
+                                      <div 
+                                          class="absolute bottom-0 left-1/4 right-1/4 h-0.5 bg-gray-800 dark:bg-white"
+                                          style="bottom: 0; transform: translateY(4px);"
+                                      ></div>
+                                  </template>
                               </span>
                           </div>
 
