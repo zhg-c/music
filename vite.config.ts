@@ -8,15 +8,11 @@ import Pages from 'vite-plugin-pages'
 import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import UnoCSS from 'unocss/vite'
-// ❌ 移除这个已弃用的命名导出
-import { presetUno } from 'unocss' 
-
-// ✅ 替换为正确的默认导出
-//import preset from 'unocss' // 你可以使用任何名称，例如 'presetUnoCore'
+import { presetUno } from 'unocss' // 核心 UnoCSS 预设
 import { presetIcons } from '@unocss/preset-icons' // 图标预设
 
 // 如果项目部署在子目录（例如 GitHub Pages），可能需要设置 REPO_NAME
-const REPO_NAME = 'music'
+const REPO_NAME = 'life'
 
 export default defineConfig(({ command }) => {
   const isProd = command === 'build'
@@ -57,7 +53,7 @@ export default defineConfig(({ command }) => {
       UnoCSS({
         presets: [
           // 核心 UnoCSS 预设（包含基础工具类）
-          presetUno(),
+          presetUno(), 
           // 图标预设（启用 i-carbon-dashboard 等图标类）
           presetIcons({
             scale: 1.2, // 可选：设置图标缩放比例
