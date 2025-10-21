@@ -1,12 +1,25 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed} from 'vue';
 
-// 模拟最近更新的曲谱（实际应通过 API 获取）
-const latestScores = ref([
-    { id: 7, title: '雪山春晓', artist: '聂中明/田景恩', difficulty: '高级', key: 'E调' },
-    { id: 8, title: '我是一个兵', artist: '佚名', difficulty: '初级', key: 'C调' },
-    { id: 9, title: '早晨', artist: '赵松庭', difficulty: '中级', key: 'G调' },
-]);
+// ✨ 1. 导入最终简化的数据结构和曲谱列表
+// 注意：Score 接口已在 scores.ts 中定义，这里需要再次导入，但我们只使用其中的 id 和 title。
+// 引入所有曲谱数据 (allScores 已经是 ID 对应的)
+import { allScores} from '../data/scores'; 
+
+// 2. 筛选和搜索状态 (只保留搜索)
+const searchTerm = ref('');
+
+// 3. 筛选后的曲谱列表 (Computed Property - 核心逻辑)
+const latestThreeScores = computed(() => {
+    const lowerCaseSearch = searchTerm.value.toLowerCase();
+    
+    return allScores.filter(score => {
+        // 只有标题匹配搜索词才显示
+        const matchesSearch = score.title.toLowerCase().includes(lowerCaseSearch);
+        
+        return matchesSearch;
+    });
+});
 </script>
 
 <template>
@@ -57,25 +70,29 @@ const latestScores = ref([
     </div>
     
     <div class="mt-12">
-        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6 border-b pb-2">
-            最近更新 <span class="i-carbon-calendar text-2xl ml-2 text-green-600" />
-        </h2>
-        <ul class="space-y-3">
-            <li v-for="score in latestScores" :key="score.id"
-                class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md hover:bg-gray-50 dark:hover:bg-gray-600 transition duration-150 flex justify-between items-center"
-            >
-                <div>
-                    <RouterLink :to="`/scores/${score.id}`" class="text-lg font-semibold text-green-600 dark:text-green-400 hover:underline">
-                        {{ score.title }}
-                    </RouterLink>
-                    <span class="text-gray-500 dark:text-gray-400 ml-3"> - {{ score.artist }}</span>
-                </div>
-                <span class="text-sm px-3 py-1 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
-                    {{ score.difficulty }} ({{ score.key }})
-                </span>
-            </li>
-        </ul>
-    </div>
-    
-  </div>
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6 border-b pb-2">
+                最近更新 <span class="i-carbon-calendar text-2xl ml-2 text-green-600" />
+            </h2>
+            
+            <ul class="flex flex-col md:flex-row gap-4">
+                <li v-for="score in latestThreeScores" :key="score.id"
+                    class="w-full md:w-1/3 bg-white dark:bg-gray-700 p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 flex flex-col justify-between items-start"
+                >
+                    <div class="w-full">
+                        <RouterLink :to="`/scores/${score.id}`" class="text-xl font-bold text-green-600 dark:text-green-400 hover:text-green-700 transition duration-150 block mb-2">
+                            {{ score.title }}
+                        </RouterLink>
+                        
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                            点击查看曲谱详情和音频。
+                        </p>
+                    </div>
+                </li>
+            </ul>
+            <p v-if="latestThreeScores.length === 0" class="text-center py-8 text-gray-500 dark:text-gray-400">
+                暂无曲谱数据。
+            </p>
+        </div>
+        </div>
+      
 </template>

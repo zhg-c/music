@@ -3,7 +3,7 @@ import { computed, ref, onMounted, onUnmounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 // 导入简化后的 Score 接口和 allScores 数组
-import { type Score, allScores } from '../../data/scores'; 
+import {allScores } from '../../data/scores'; 
 
 const route = useRoute();
 const router = useRouter();

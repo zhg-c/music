@@ -37,9 +37,9 @@ const toggleDark = useToggle(isDark);
         <div v-if="isAuthenticated" class="flex items-center space-x-4">
           </div>
         
-        <RouterLink v-else to="/login" class="text-sm font-medium text-white bg-green-600 px-4 py-2 rounded-lg hover:bg-green-700 transition duration-150 shadow-md">
-          <div class="i-carbon-login inline-block mr-1" />
-          登录 / 注册
+        <RouterLink to="/" class="flex items-center space-x-2 text-2xl font-bold text-gray-900 dark:text-white">
+            <div class="i-carbon-music text-green-500 text-3xl" />
+            <span>首页</span>
         </RouterLink>
       </div>
     </div>
