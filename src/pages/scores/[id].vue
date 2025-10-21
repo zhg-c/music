@@ -2,17 +2,13 @@
 import { computed, ref, onMounted, onUnmounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
-// 移除 import * as Tone from 'tone'; 
+// 导入简化后的 Score 接口和 allScores 数组
 import { type Score, allScores } from '../../data/scores'; 
-// 修改为（保留 useUser 导入，但移除 isAuthenticated 的解构赋值）：
-import { useUser } from '../../composables/useUser'; 
-// 移除未使用的 isAuthenticated 声明
-const { } = useUser();
 
-
-// 1. 路由参数
 const route = useRoute();
 const router = useRouter();
+
+// 1. 路由参数
 const scoreId = computed(() => Number(route.params.id));
 
 // 2. 查找当前曲谱
@@ -74,16 +70,6 @@ onMounted(() => {
         audioRef.value.addEventListener('ended', handleEnded);
     }
 });
-
-// 5. 辅助函数：根据难度获取颜色类
-const getDifficultyClass = (difficulty: Score['difficulty']) => {
-    const map = {
-        '初级': 'text-blue-500',
-        '中级': 'text-yellow-500',
-        '高级': 'text-red-500',
-    };
-    return map[difficulty] || 'text-gray-500';
-};
 </script>
 
 <template>
@@ -92,15 +78,6 @@ const getDifficultyClass = (difficulty: Score['difficulty']) => {
             
             <header class="mb-8 border-b dark:border-gray-700 pb-4">
                 <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white mb-2">{{ currentScore.title }}</h1>
-                <p class="text-xl text-gray-600 dark:text-gray-400">作曲家: {{ currentScore.artist }}</p>
-                
-                <div class="mt-4 flex flex-wrap space-x-6 text-sm">
-                    <span class="font-semibold" :class="getDifficultyClass(currentScore.difficulty)">
-                        难度: {{ currentScore.difficulty }}
-                    </span>
-                    <span class="text-gray-500 dark:text-gray-400">时长: {{ currentScore.duration }}</span>
-                    <span class="text-gray-500 dark:text-gray-400">调性: {{ currentScore.key }}</span>
-                </div>
             </header>
 
             <section class="mt-8">
@@ -136,16 +113,9 @@ const getDifficultyClass = (difficulty: Score['difficulty']) => {
                     </div>
                     
                     <p class="mt-4 text-xs text-gray-500 dark:text-gray-400">
-                        当前功能已切换为播放外部音频文件。请确保 `assets/` 文件夹中存在对应的 `.mp3` 文件。
+                        当前功能已切换为播放外部音频文件。请确保音频和图片文件存在于项目中的正确路径下。
                     </p>
                 </div>
-            </section>
-            
-            <section class="mt-8">
-                <h2 class="2xl font-semibold text-gray-800 dark:text-gray-200 mb-3 border-l-4 border-green-500 pl-3">
-                    曲谱描述
-                </h2>
-                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">{{ currentScore.description }}</p>
             </section>
             
         </div>
@@ -161,6 +131,7 @@ const getDifficultyClass = (difficulty: Score['difficulty']) => {
 </template>
 
 <style scoped>
+/* 确保图标显示正常 */
 .i-carbon-play, .i-carbon-pause {
     display: inline-block;
     width: 1em;
