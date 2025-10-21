@@ -1,6 +1,4 @@
 <script setup lang="ts">
-// 自动导入，RouterLink 可以直接使用
-import { useRoute } from 'vue-router';
 
 // 模拟外部链接
 const links = {

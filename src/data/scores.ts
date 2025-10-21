@@ -25,8 +25,8 @@ const GUSU_JIANPU_DATA: Score['jianpuData'] = [
     { pitch: '5', duration: 1 }, // 四分音符，不需要线
     
     // ✨ 6 和 5 是两个八分音符，在同一拍中，需要连接
-    { pitch: '6', duration: 0.5, needsBeam: 'start' },  // 八分音符，连接开始
-    { pitch: '5', duration: 0.5, needsBeam: 'end' },    // 八分音符，连接结束
+    { pitch: '6', duration: 0.5,  },  // 八分音符，连接开始
+    { pitch: '5', duration: 0.5, },    // 八分音符，连接结束
     
     { pitch: '3', duration: 1}, // 四分音符
     { pitch: '0', duration: 1}, // 休止符

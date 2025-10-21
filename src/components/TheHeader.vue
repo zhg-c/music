@@ -1,9 +1,9 @@
 <script setup lang="ts">
 // useUser, useRoute, useRouter, useDark, useToggle 都会被自动导入
 import { useUser } from '../composables/useUser';
-const { isAuthenticated, logout, currentUser } = useUser();
+const { isAuthenticated} = useUser();
 import { useRouter } from 'vue-router';
-const router = useRouter();
+useRouter();
 
 // ✨ 暗黑模式逻辑 ✨
 // 1. 创建 isDark 状态，它会自动检测系统偏好和存储
