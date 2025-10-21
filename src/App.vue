@@ -1,18 +1,10 @@
 <script setup lang="ts">
-// 自动导入 TheHeader（因为配置了 unplugin-vue-components）
 import TheHeader from './components/TheHeader.vue';
-// 自动导入 TheFooter
 import TheFooter from './components/TheFooter.vue'; 
-// VueUse 的 useDark, useToggle, usePreferredDark 都会被自动导入
-
-// 1. 设置颜色模式管理
-// 默认使用 'class' 模式，这意味着 UnoCSS (或 Tailwind) 将通过 body/html 上的 'dark' 类名来切换样式
-
-// 2. 将 useDark 暴露给全局，方便在任何地方使用
 import { useDark } from '@vueuse/core';
+import { RouterView } from 'vue-router';
 
 
-// 移除对 'isDark' 变量的声明
 useDark({
   selector: 'html',
   attribute: 'class',
@@ -20,12 +12,6 @@ useDark({
   valueLight: 'light',
 });
 
-// ⚠️ 将这两个变量暴露给 window/全局 context，以便在其他组件中访问
-// 💡 在更大型的应用中，我们通常会创建一个 Store 或 Provider 来传递这些状态
-// 但对于简单项目，我们可以通过一个简单的 composable 或全局暴露来实现切换
-// 由于我们希望在 Header 中使用，最好的方法是将 toggleDark 放到 useUser 或新建一个 useTheme composable
-
-// 考虑到简单性，我们现在将切换按钮直接放在 Header 中，并在 Header 中定义 toggleDark
 </script>
 
 <template>
@@ -64,5 +50,15 @@ useDark({
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+/* 🎯 关键的全局 CSS 优化：确保 body/html 不引起双重滚动条 */
+html, body {
+    /* 移除浏览器默认的 margin 和 padding */
+    margin: 0;
+    padding: 0;
+    /* 避免 html 或 body 出现多余的滚动条 */
+    overflow-x: hidden; 
+    /* 确保 body 不会比视口小 */
+    min-height: 100%;
 }
 </style>

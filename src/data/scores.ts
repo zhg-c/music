@@ -38,6 +38,31 @@ const SCORE_CONFIGS = [
         id: 5, 
         fileName: '成都', 
     },
+    { 
+        id: 1, 
+        fileName: '荒', // 标题和文件名前缀都使用 '荒'
+    },
+    // 未来添加更多曲谱时，只需添加 id 和 fileName：
+    { 
+        id: 2, 
+        fileName: '成都', 
+    },
+    { 
+        id: 3, 
+        fileName: '成都', 
+    },
+    { 
+        id: 4, 
+        fileName: '成都', 
+    },
+    { 
+        id: 5, 
+        fileName: '成都', 
+    },
+    { 
+        id: 1, 
+        fileName: '荒', // 标题和文件名前缀都使用 '荒'
+    },
 ];
 
 const SCORE_PATH = 'mock/'; // 统一的路径前缀
