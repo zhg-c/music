@@ -1,25 +1,9 @@
 <script setup lang="ts">
-import { ref, computed} from 'vue';
 
 // ✨ 1. 导入最终简化的数据结构和曲谱列表
 // 注意：Score 接口已在 scores.ts 中定义，这里需要再次导入，但我们只使用其中的 id 和 title。
 // 引入所有曲谱数据 (allScores 已经是 ID 对应的)
-import { allScores} from '../data/scores'; 
-
-// 2. 筛选和搜索状态 (只保留搜索)
-const searchTerm = ref('');
-
-// 3. 筛选后的曲谱列表 (Computed Property - 核心逻辑)
-const latestThreeScores = computed(() => {
-    const lowerCaseSearch = searchTerm.value.toLowerCase();
-    
-    return allScores.filter(score => {
-        // 只有标题匹配搜索词才显示
-        const matchesSearch = score.title.toLowerCase().includes(lowerCaseSearch);
-        
-        return matchesSearch;
-    });
-});
+import { latestThreeScores } from '../data/scores'; 
 </script>
 
 <template>

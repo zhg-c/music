@@ -12,7 +12,7 @@ import routes from 'virtual:generated-pages'
 // 创建路由器实例
 const router = createRouter({
   // 最佳兼容性：使用 Hash 模式，避免服务器配置问题
-  history: createWebHashHistory(), 
+  history: createWebHashHistory(import.meta.env.BASE_URL), 
   routes,
 })
 

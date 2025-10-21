@@ -26,6 +26,18 @@ const SCORE_CONFIGS = [
         id: 2, 
         fileName: '成都', 
     },
+    { 
+        id: 3, 
+        fileName: '成都', 
+    },
+    { 
+        id: 4, 
+        fileName: '成都', 
+    },
+    { 
+        id: 5, 
+        fileName: '成都', 
+    },
 ];
 
 const SCORE_PATH = 'mock/'; // 统一的路径前缀
@@ -40,13 +52,6 @@ export const allScores: Score[] = SCORE_CONFIGS.map(config => ({
     imageUrl: `${SCORE_PATH}${config.fileName}.png`,
     audioUrl: `${SCORE_PATH}${config.fileName}.mp3`,
 }));
-
-// 当前 allScores 的输出结果为：
-// [
-//     {
-//         id: 1,
-//         title: '荒',
-//         imageUrl: 'mock/荒.png',
-//         audioUrl: 'mock/荒.mp3',
-//     },
-// ]
+export const latestThreeScores: Score[] = allScores
+    .slice(-3) // 从数组末尾截取最后三个元素 (即 ID最大的三个)
+    .reverse(); // 反转顺序，让最新的曲谱显示在列表最前面

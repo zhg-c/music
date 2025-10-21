@@ -16,6 +16,6 @@ const currentYear = new Date().getFullYear();
 /* 保持样式简洁，确保页脚始终在底部 */
 footer {
     /* min-h-[4rem] 确保页脚有一定的可见高度 */
-    min-height: 4rem; 
+    min-height: 1rem; 
 }
 </style>
