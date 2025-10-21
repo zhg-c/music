@@ -7,23 +7,18 @@ import TheFooter from './components/TheFooter.vue';
 
 // 1. 设置颜色模式管理
 // 默认使用 'class' 模式，这意味着 UnoCSS (或 Tailwind) 将通过 body/html 上的 'dark' 类名来切换样式
-import { useColorMode } from '@vueuse/core';
-const mode = useColorMode({
-  storageKey: 'music-color-scheme', // 存储在 localStorage 中的键名
-  attribute: 'class', // 切换 'dark' 类名
-  initialValue: 'auto', // 优先根据系统偏好设置
-});
 
 // 2. 将 useDark 暴露给全局，方便在任何地方使用
 import { useDark } from '@vueuse/core';
-const isDark = useDark({
-    // 监听 mode 变化
-    storageKey: 'music-color-scheme',
-});
 
-// 3. 将切换函数暴露给 Header
-import { useToggle } from '@vueuse/core';
-const toggleDark = useToggle(isDark);
+
+// 移除对 'isDark' 变量的声明
+useDark({
+  selector: 'html',
+  attribute: 'class',
+  valueDark: 'dark',
+  valueLight: 'light',
+});
 
 // ⚠️ 将这两个变量暴露给 window/全局 context，以便在其他组件中访问
 // 💡 在更大型的应用中，我们通常会创建一个 Store 或 Provider 来传递这些状态
