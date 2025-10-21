@@ -11,7 +11,7 @@ const scoreContainer = ref<HTMLDivElement | null>(null);
 
 // 配置常量
 const STAVE_WIDTH = 780;      // 每行五线谱的宽度
-// const STAVE_HEIGHT = 100;     // 每行五线谱的高度
+const STAVE_HEIGHT = 100;     // 每行五线谱的高度
 const STAVE_X = 10;           // 起始 X 坐标
 const STAVE_Y_SPACING = 100;  // 每行之间的 Y 间隔
 const BEATS_PER_MEASURE = 4;  // 每小节的拍数 (4/4 拍)
@@ -32,7 +32,7 @@ watchEffect(() => {
     container.innerHTML = ''; 
 
     // 1. 计算总拍数并确定每行小节数（简化：假设每 4 个音符为一个小节，每行 4 小节）
-Math.ceil(props.musicData.length / BEATS_PER_MEASURE);
+    const totalMeasures = Math.ceil(props.musicData.length / BEATS_PER_MEASURE);
     const measuresPerLine = 4; 
     
     // 假设每个音符都是四分音符 (q)，计算每行需要的音符数量

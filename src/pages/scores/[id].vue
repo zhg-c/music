@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { computed, ref, onMounted, onUnmounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { useUser } from '../../composables/useUser';
 import * as Tone from 'tone'; 
 
 // 从外部文件导入 Score 接口和 allScores 数组
 import { type Score, allScores } from '../../data/scores'; 
 
+const { isAuthenticated } = useUser();
 
 // 1. 路由参数
 const route = useRoute();
@@ -28,6 +30,7 @@ let sequence: Tone.Sequence | undefined;
 // 3. 简谱显示规范处理（小节标记）
 // ----------------------------------------------------
 const BEATS_PER_MEASURE = 4; // 拍号：4/4 拍
+const NOTES_PER_BEAT = 4;    // 假设最小音符粒度是十六分音符 (1/4 拍)
 // ✨ 修改：将音符数据按小节分组
 const groupJianpuByMeasure = (data: Score['jianpuData']): any[][] => {
     let currentBeatCount = 0;
